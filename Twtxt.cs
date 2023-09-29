@@ -1,6 +1,6 @@
 namespace twtxt;
 
-public class Manual
+public class Twtxt
 {
     public static string Help()
     {
