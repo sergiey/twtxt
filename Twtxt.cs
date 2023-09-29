@@ -1,3 +1,4 @@
+using System.Text;
 using twtxt.Models;
 
 namespace twtxt;
@@ -18,11 +19,9 @@ public class Twtxt
         }
         else
         {
-            fi.Create();
-            using StreamWriter sw = fi.CreateText();
+            using StreamWriter sw = new StreamWriter(fi.Create(), Encoding.UTF8);
             sw.WriteLine($"{tw.AbsoluteDateTime}\t{tw.Text}");
         }
-
     }
 
     public void ShowTimeline()
