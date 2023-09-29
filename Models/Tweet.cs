@@ -7,7 +7,7 @@ public class Tweet
     private readonly DateTime _createdAt;
     public string Text { get; }
     public Source? Src { get; }
-    public string AbsoluteDateTime => _createdAt.ToString(CultureInfo.InvariantCulture);
+    public string AbsoluteDateTime => $"{_createdAt:s}{_createdAt:zzz}";
     public string RelativeDateTime => ToRelativeDateTime(_createdAt);
 
     public Tweet(string text, DateTime? createdAt = null, Source? src = null)
