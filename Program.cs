@@ -15,6 +15,8 @@ internal class Program
             switch (args[0].ToLower())
             {
                 case "tweet":
+                    if (args.Length < 1)
+                        throw new ArgumentOutOfRangeException();
                     twtxt.MakeTweet(args[1]);
                     break;
                 case "timeline":
@@ -27,9 +29,13 @@ internal class Program
                     twtxt.ShowFollowing();
                     break;
                 case "follow":
+                    if (args.Length < 2)
+                        throw new ArgumentOutOfRangeException();
                     twtxt.Follow(args[1], args[2]);
                     break;
                 case "unfollow":
+                    if (args.Length < 1)
+                        throw new ArgumentOutOfRangeException();
                     twtxt.Unfollow(args[1]);
                     break;
                 default:
@@ -37,9 +43,15 @@ internal class Program
                     break;
             }
         }
+        catch (ArgumentOutOfRangeException e)
+        {
+            Console.WriteLine("Invalid number of parameters.");
+            twtxt.ShowHelp();
+        }
         catch(Exception e)
         {
             Console.WriteLine(e.Message);
+            twtxt.ShowHelp();
         }
     }
 }
