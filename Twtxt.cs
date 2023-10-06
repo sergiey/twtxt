@@ -47,6 +47,32 @@ public class Twtxt
                     help                    Displays this help screen.
             """);
     }
+
+    public void ShowFollowing()
+    {
+        if(File.Exists(_configFile))
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(_configFile);
+                FollowList? followList = JsonSerializer.Deserialize<FollowList>(jsonString);
+                Console.WriteLine("You are following:");
+                if (followList?.Following != null)
+                {
+                    foreach (Source src in followList.Following)
+                        Console.Write($"@{src.Nick}  ");
+                    Console.WriteLine();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        else
+            Console.WriteLine($"The config file ({_configFile}) does not exist.");
+    }
+
     public void Follow(string username, string url)
     {
         var options = new JsonSerializerOptions
