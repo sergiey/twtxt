@@ -104,4 +104,39 @@ public class Twtxt
         }
 
     }
+
+    public void Unfollow(string username)
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
+        var followList = new FollowList();
+        var removingSource = new Source(username);
+
+        if(File.Exists(_configFile))
+        {
+            using(FileStream fs = new FileStream(_configFile, FileMode.OpenOrCreate))
+            {
+                try
+                {
+                    followList = JsonSerializer.Deserialize<FollowList>(fs);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        if(followList != null && followList.Following.Exists(src => src.Nick == removingSource.Nick))
+        {
+            using FileStream fs = new FileStream(_configFile, FileMode.Create);
+            followList.Following.RemoveAll(src => src.Nick == removingSource.Nick);
+            JsonSerializer.Serialize(fs, followList, options);
+        }
+        else
+            Console.WriteLine("You do not follow this user.");
+
+    }
 }
