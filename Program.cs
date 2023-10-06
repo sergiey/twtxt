@@ -1,25 +1,45 @@
 ﻿using twtxt;
-using twtxt.Models;
-using static twtxt.Manual;
 
 internal class Program
 {
     public static void Main(string[] args)
     {
+        Twtxt twtxt = new Twtxt();
         if (args.Length < 1) {
-            Console.WriteLine(Help());
+            twtxt.ShowHelp();
             return;
         }
-        args[0].ToLower() switch
+
+        try
         {
-            "tweet"     => MakeTweet(args[1]),
-            "timeline"  => ShowTimeline(),
-            "following" => ShowFollowing(),
-            "follow"    => Follow(args[1], args[2]),
-            "unfollow"  => Unfollow(args[1]),
-            "help"      => Help(),
-            "man"       => Help(),
-            _           => Help()
-        };
+            switch (args[0].ToLower())
+            {
+                case "tweet":
+                    twtxt.MakeTweet(args[1]);
+                    break;
+                case "timeline":
+                    twtxt.ShowTimeline();
+                    break;
+                case "help":
+                    twtxt.ShowHelp();
+                    break;
+                case "following":
+                    twtxt.ShowFollowing();
+                    break;
+                case "follow":
+                    twtxt.Follow(args[1], args[2]);
+                    break;
+                case "unfollow":
+                    twtxt.Unfollow(args[1]);
+                    break;
+                default:
+                    twtxt.ShowHelp();
+                    break;
+            }
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }
