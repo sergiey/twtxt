@@ -82,19 +82,13 @@ public class Twtxt
         var followList = new FollowList();
         var newSource = new Source(username, url);
 
-        if(File.Exists(_configFile))
+        try
         {
-            using(FileStream fs = new FileStream(_configFile, FileMode.OpenOrCreate))
-            {
-                try
-                {
-                    followList = JsonSerializer.Deserialize<FollowList>(fs);
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
+            followList = GetFollowListFromConfigFile();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
 
         using(FileStream fs = new FileStream(_configFile, FileMode.Create))
@@ -114,22 +108,16 @@ public class Twtxt
         var followList = new FollowList();
         var removingSource = new Source(username);
 
-        if(File.Exists(_configFile))
+        try
         {
-            using(FileStream fs = new FileStream(_configFile, FileMode.OpenOrCreate))
-            {
-                try
-                {
-                    followList = JsonSerializer.Deserialize<FollowList>(fs);
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
+            followList = GetFollowListFromConfigFile();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
 
-        if(followList != null && followList.Following.Exists(src => src.Nick == removingSource.Nick))
+        if(followList.Following.Exists(src => src.Nick == removingSource.Nick))
         {
             using FileStream fs = new FileStream(_configFile, FileMode.Create);
             followList.Following.RemoveAll(src => src.Nick == removingSource.Nick);
@@ -137,6 +125,15 @@ public class Twtxt
         }
         else
             Console.WriteLine("You do not follow this user.");
+    }
 
+    private FollowList GetFollowListFromConfigFile()
+    {
+        if(File.Exists(_configFile))
+        {
+            using FileStream fs = new FileStream(_configFile, FileMode.OpenOrCreate);
+            return JsonSerializer.Deserialize<FollowList>(fs);
+        }
+        return new FollowList();
     }
 }
