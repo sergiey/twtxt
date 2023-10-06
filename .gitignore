@@ -11,6 +11,7 @@ autom4te.cache/
 tarballs/
 test-results/
 .#*
+.twtxtconfig
 
 # Mac bundle stuff
 *.dmg

@@ -1,6 +1,14 @@
 {
-		"serg":	"/Users/sergeymelnikov/Downloads/twtxtc-master/twtxt.txt",
-		"usr":	"https://hecanjog.com/twtxt.txt",
-		"git":	"https://raw.githubusercontent.com/sergmelnikov/twtxt/main/twtxt.txt",
-		"hellow":	"http://www.w.ru"
+  "Following": [
+    {
+      "Nick": "setdsa",
+      "Url": "www.s0Clforward.rcfad",
+      "File": null
+    },
+    {
+      "Nick": "ale",
+      "Url": "www.sODfsdfasClforward.rcfad",
+      "File": null
+    }
+  ]
 }
