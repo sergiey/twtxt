@@ -45,4 +45,35 @@ public class Twtxt
                     help                    Displays this help screen.
             """);
     }
+    public void Follow(string username, string url)
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
+        var followList = new FollowList();
+        var newSource = new Source(username, url);
+
+        if(File.Exists(_configFile))
+        {
+            using(FileStream fs = new FileStream(_configFile, FileMode.OpenOrCreate))
+            {
+                try
+                {
+                    followList = JsonSerializer.Deserialize<FollowList>(fs);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        using(FileStream fs = new FileStream(_configFile, FileMode.Create))
+        {
+            followList?.Following.Add(newSource);
+            JsonSerializer.Serialize(fs, followList, options);
+        }
+
+    }
 }
