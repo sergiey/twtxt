@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using twtxt.Models;
 
 namespace twtxt;
@@ -6,6 +7,7 @@ namespace twtxt;
 public class Twtxt
 {
     private readonly string _textFile = "twtxt.txt";
+    private readonly string _configFile = ".twtxtconfig";
 
     public void MakeTweet(string text)
     {
